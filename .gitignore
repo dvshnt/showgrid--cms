@@ -1,3 +1,5 @@
 **/**/node_modules
 client/www/bundle.js
-client/www/style.css
+client/www/bundle.js.map
+client/www/main.css
+npm-debug.log

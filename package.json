@@ -4,11 +4,12 @@
   "description": "showgrid cms",
   "main": "server.js",
   "scripts": {
+    "start": "node ./server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "cfg":{
-    "main_db":"localhost:8000",
-    "api_db":"localhost:3000"
+  "cfg": {
+    "main_db": "localhost:8000",
+    "api_db": "localhost:3000"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,40 @@
   "bugs": {
     "url": "https://github.com/dvshnt/showgrid--cms/issues"
   },
-  "homepage": "https://github.com/dvshnt/showgrid--cms#readme"
+  "homepage": "https://github.com/dvshnt/showgrid--cms#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "colors": "^1.1.2",
+    "cookie-parser": "^1.4.0",
+    "debug": "^2.2.0",
+    "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "history": "^1.17.0",
+    "json-middleware": "^1.0.2",
+    "lodash": "^3.10.1",
+    "material-ui": "^0.14.1",
+    "multiparty": "^4.1.2",
+    "react": "^0.14.5",
+    "react-dom": "^0.14.5",
+    "react-redux": "^4.0.6",
+    "react-router": "^1.0.3",
+    "react-tap-event-plugin": "^0.2.1",
+    "redux": "^3.0.5",
+    "request": "^2.67.0",
+    "require": "^2.4.20",
+    "superagent": "^1.6.1"
+  },
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.1.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-util": "^3.0.7",
+    "lodash.assign": "^3.2.0",
+    "reactify": "^1.1.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.6.1"
+  }
 }

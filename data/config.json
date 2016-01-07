@@ -1,0 +1,7 @@
+{
+	"port":"1337",
+	"db_url":"http://localhost:8000",
+	"api_url":"http://localhost:3000",
+	"db_version":"v1",
+	"api_version":"0.0.1"
+}

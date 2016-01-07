@@ -1,0 +1,1 @@
+routes.js connects and proxies to database and scraper api with global credentials based on django database superuser accounts.
