@@ -23,6 +23,10 @@ require('./data/routes')(app);
 app.use(www);
 
 
+app.get('*', function (req, res){
+  res.sendFile(__dirname+'/client/www/index.html')
+})
+
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;

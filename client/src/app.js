@@ -1,76 +1,51 @@
 var s = require('./store');
 var React = require('react');
-var react_redux = require('react-redux');
-var Provider = react_redux.Provider;
+var Provider = require('react-redux').Provider;
 var render = require('react-dom').render;
 
-var connect = react_redux.connect;
+require("react-tap-event-plugin")();
 
 
-var injectTapEventPlugin = require("react-tap-event-plugin");
-injectTapEventPlugin();
+var AppView = require('./views/AppView');
+var LoginView = require('./views/LoginView');
+var DashView = require('./views/DashView');
+var VenuesView = require('./views/VenuesView');
+var ShowsView = require('./views/ShowsView');
 
 
-var CircularProgress = require('material-ui/lib/circular-progress').default;
-
-var s = require('./store');
 
 var Router = require('react-router').Router
 var Route = require('react-router').Route
-var Link = require('react-router').Link
-var browserHistory = require('react-router').browserHistory;
 
 
+var routes = (
+	<Route path="/" component={AppView}>
+		<Route path="login" component={LoginView}></Route>
+		<Route path="dash" component={DashView}></Route>
+		<Route path="venues" component={VenuesView}></Route>
+		<Route path="shows" component={ShowsView}></Route>
+	</Route>	
+)
 
-var LoginView = require('./views/LoginView');
-var AdminView = require('./views/AdminView');
+var pushPath = require('redux-simple-router').pushPath
 
-var App = React.createClass({
 
-	componentDidMount: function(){
-		
-	},
-	render: function(){	
-		if(this.props.loading) start_view = <CircularProgress mode="indeterminate" size={1.5} />
+//try auto login.
+s.getProfile(function(succ){
 
-		if (!this.props.user){
-			start_view = <LoginView/>
-		}else{
-			start_view =  <AdminView/>
+	if(!succ){
+		s.store.dispatch(pushPath('/login'))
+	}else{
+		if(s.store.getState().routing.path == '/'){
+			s.store.dispatch(pushPath('/dash'))
 		}
-		return start_view
 	}
-})
 
-
-
-function select(state){
-	return {
-		loading: state.loading,
-		user: state.user
-	}
-}
-
-
-var BoundApp = connect(select)(App);
-
-
-function init(){
-	return (
-		<Router history={browserHistory}>
-			<Route path="/" component={loginView}>
-			</Route>
-		</Router>
-	)
-}
-
-s.getProfile(function(){
 	render(
 		<Provider store={s.store}>
-			<BoundApp/>
-		</Provider>,document.getElementById('sgcms')
-	);	
+			<Router history={s.history} routes={routes} />
+		</Provider>
+		,document.getElementById('sgcms')
+	)
+
 })
-
-
-

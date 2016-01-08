@@ -10,11 +10,11 @@ var CardHeader = require('material-ui/lib/card/card-header').default;
 var s = require('../store.js');
 var Snackbar = require('material-ui/lib/snackbar').default;
 var RefreshIndicator = require('material-ui/lib/refresh-indicator').default;
+var pushPath = require('redux-simple-router').pushPath;
 
 var LoginView = React.createClass({
 	getInitialState: function(){
 		return {
-		//	login_error: false,
 			user_error: null,
 			pass_error: null,
 			disabled: false
@@ -45,6 +45,11 @@ var LoginView = React.createClass({
 	},
 
 	shouldComponentUpdate:function(props,state){
+	//	console.log("UPDATE LOGIN",props);
+		if(props.user){
+			s.store.dispatch(pushPath('/dash'));
+			return false
+		}
 		// if(this.props.loading){
 
 		// }
@@ -84,8 +89,9 @@ var LoginView = React.createClass({
 
 function select(state){
 	return {
-		loading: state.loading_user,
-		error : state.login_error
+		user: state.app.user,
+		loading: state.app.loading_user,
+		error : state.app.login_error
 	}
 }
 

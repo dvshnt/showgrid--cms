@@ -6,28 +6,17 @@ var colors = require('colors');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 
+function logout(req,res,next){
+	console.log('LOGOUT');
+	if(req.session) req.session.destroy();
+	res.sendStatus(200);
+}
 
 function login(req,res,next){
 
 	console.log("LOGIN",req.body);
-
-	//console.log("LOGIN".bold.yellow,req.body)
-	if(req.body && req.body.user != null && req.body.pass != null){
-		var auth = {
-			'user': req.body.user,
-			'pass': req.body.pass,	
-		}
-	}else if(req.body && req.body.token != null){
-		var auth = {
-			'bearer': req.body.token
-		}		
-	}else{
-		return res.status(500).json({status:"bad_query"});
-	}
-
 	request.post({
 		url:cfg.db_url+'/login',
-		'auth':auth,
 		json:true,
 		body: {
 			password: req.body.pass,
@@ -35,12 +24,12 @@ function login(req,res,next){
 		}
 	},function(err,db_res,body){
 
-
+		console.log("TRY DB LOGIN",body)
 		if(body.token){
 			req.token = body.token;
+			console.log("SET USER");
 			setUser(req,res);
-			console.log("REDIRECT TO PROFILE");
-		}	
+		}
 		else res.status(403).json({status:"bad_login"});
 	})
 }
@@ -141,6 +130,7 @@ module.exports = function(app){
 		saveUninitialized: false,
 	}));
 	app.post('/login',login);
+	app.post('/logout',logout);
 	app.use('/data',router);
 	test(); //test db connections and versions
 }
